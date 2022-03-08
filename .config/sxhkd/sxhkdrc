@@ -20,7 +20,7 @@ XF86Audio{Raise,Lower}Volume
 
 # Change Brightness
 XF86MonBrightness{Up,Down}
-	brightnessctl s 10%{+,-}
+	brightnessctl s 05%{+,-}
 
 # program launcher
 super + @space
