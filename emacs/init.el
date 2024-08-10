@@ -9,14 +9,14 @@
 
 ;; Themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'warm-night :no-confirm)
-
+(load-theme 'gruvbox-dark-soft :no-confirm)
 (electric-indent-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (fringe-mode -1)
-;line number
+
+					;line number
 (setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
@@ -41,10 +41,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("9ab46512b8b69478b057f79d0eb0faee61d19e53917a868a14e41bf357cee6d4" default))
- '(org-agenda-files '("~/Documents/Budget/June.2024.org"))
+   '("871b064b53235facde040f6bdfa28d03d9f4b966d8ce28fb1725313731a2bcc8"
+	 "9ab46512b8b69478b057f79d0eb0faee61d19e53917a868a14e41bf357cee6d4"
+	 default))
  '(package-selected-packages
-   '(xah-fly-keys lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode)))
+   '(avy company dap-mode flycheck helm-lsp helm-xref hydra lsp-mode
+		 lsp-treemacs nov org-roam projectile which-key yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -122,3 +124,26 @@
 (add-to-list 'load-path "~/.emacs.d/predictive/")
 (add-hook 'org-journal-mode-hook '(load-library predictive))
 (add-hook 'org-journal-mode-hook 'visual-line-mode)
+
+;; Org roam
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/Documents/Roam"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today)
+		 :map org-mode-map
+		 ("C-c C-i"   . completion-at-point))
+ :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
+;; Dendroam
+(load-file "~/.emacs.d/emacs/dendroam.el")
